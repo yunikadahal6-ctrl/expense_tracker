@@ -1,0 +1,28 @@
+<h2>My Expenses</h2>
+
+<a href="{% url 'expense_create' %}">+ Add New Expense</a>
+
+<ul>
+    <form method="get">
+    <!-- (Why name="q"? Because when you type "momo" and click Search, the browser puts ?q=momo into the URL!) -->
+    <input type="text" name="q" placeholder="Search expense...">
+    <button type="submit">Search</button>
+</form>
+    <a href="?category=food">Food</a>
+             <a href="?category=transport">Transport</a>
+             <a href="?category=bills">Bills </a> 
+             <a href="?category=other">Other</a>
+    {% for item in items %}
+        <li>
+
+        
+            
+            {{ item.title }} - ${{ item.amount }} ({{ item.get_category_display }})
+             <a href="{% url 'expense_update' item.pk %}">Edit</a>
+             <a href="{% url 'expense_delete' item.pk %}">Delete</a>
+             <h3>Total Spent: ${{ total }}</h3>
+        </li>
+    {% empty %}
+        <li>No expenses found yet.</li>
+    {% endfor %}
+</ul>
