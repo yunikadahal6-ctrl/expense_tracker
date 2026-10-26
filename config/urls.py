@@ -25,4 +25,6 @@ urlpatterns = [
     path('bookmark/create/', manager_views.bookmark_create, name='bookmark_create'),  
     path('bookmark/<int:pk>/edit/', manager_views.bookmark_update, name='bookmark_update'),
     path('bookmark/<int:pk>/delete/', manager_views.bookmark_delete, name='bookmark_delete'),
+
+    path('accounts/signup/', manager_views.signup_view, name='signup'),
 ]

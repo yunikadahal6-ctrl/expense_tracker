@@ -52,6 +52,19 @@
         </div>
 
     </div>
+    <!-- Login/Logout & Signup Status -->
+        <div class="mt-5">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <p class="text-muted">Logged in as: <strong>{{ user.username }}</strong></p>
+                    <button type="submit" class="btn btn-outline-danger px-4">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-dark px-4 me-2">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-success px-4">Sign Up</a>
+            {% endif %}
+        </div>
 
 </body>
 </html>

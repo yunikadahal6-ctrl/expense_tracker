@@ -6,12 +6,14 @@
     <title>My Expenses</title>
     <!-- BOOTSTRAP LINK -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CHART.JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-light">
 
     <div class="container mt-5" style="max-width: 800px;">
         
-        <!-- Logout Button (Mathi Top-Right ma) -->
+        <!-- Logout Button -->
         <div class="text-end mb-3">
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
@@ -20,15 +22,26 @@
             </form>
         </div>
 
-        <!-- Title ra Add Button -->
+        <!-- Title ra Navigation Buttons -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="text-success">💸 My Expenses</h2>
-            <a href="{% url 'expense_create' %}" class="btn btn-success">+ Add New Expense</a>
+            <h2 class="text-success">💸 My Expenses Dashboard</h2>
+            <div>
+                <a href="{% url 'home' %}" class="btn btn-outline-dark me-2">🏠 Home</a>
+                <a href="{% url 'expense_create' %}" class="btn btn-success">+ Add New Expense</a>
+            </div>
         </div>
 
-        <!-- Total Spent (Loop vanda bahira rakheko, euta ramro Box ma) -->
+        <!-- Total Spent Box -->
         <div class="alert alert-info shadow-sm fs-5">
             <strong>Total Spent:</strong> <span class="text-danger fw-bold">${{ total|default:"0.00" }}</span>
+        </div>
+
+        <!-- VISUAL CHART CARD -->
+        <div class="card shadow-sm mb-4 p-4 text-center">
+            <h5 class="text-secondary mb-3">📊 Spending Breakdown by Category</h5>
+            <div style="max-width: 300px; margin: auto;">
+                <canvas id="expenseChart"></canvas>
+            </div>
         </div>
 
         <!-- Search ra Filter Card -->
@@ -57,7 +70,6 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
                         <strong class="fs-5">{{ item.title }}</strong> 
-                        <!-- Paisa lai Green badge ma haleko -->
                         <span class="badge bg-success rounded-pill ms-2">${{ item.amount }}</span>
                         <br>
                         <small class="text-muted">Category: {{ item.get_category_display }}</small>
@@ -76,6 +88,35 @@
         </ul>
 
     </div>
+
+    <!-- JAVASCRIPT FOR CHART.JS -->
+    <script>
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        const expenseChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Food', 'Transport', 'Bills', 'Other'],
+                datasets: [{
+                    data: {{ chart_data|safe }},
+                    backgroundColor: [
+                        '#ffc107', 
+                        '#0dcaf0', 
+                        '#dc3545', 
+                        '#6c757d'  
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>

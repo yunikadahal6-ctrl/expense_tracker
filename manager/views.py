@@ -2,8 +2,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required  # <-- NAYA: Security ko lagi
 from .forms import BookmarkForm
 from .models import Bookmark
+from django.contrib.auth.forms import UserCreationForm
 
 # @login_required le login navako user lai yo page herna didaina
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()  # Naya user database ma save huncha
+            return redirect('login')  # Banisake pachi Login page ma pathaune
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
 @login_required 
 def bookmark_list(request):
     # NAYA: all() ko satto filter(user=request.user) haleko (Aafno matra dekhna)
