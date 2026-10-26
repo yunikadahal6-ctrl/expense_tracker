@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bookmark Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Django ko default form input lai halka ramro banauna sano custom CSS */
+        input[type="text"], input[type="url"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- container le bich ma lyauncha, mt-5 le mathi bata gap dincha -->
+    <div class="container mt-5" style="max-width: 500px;">
+        
+        <div class="card shadow-sm">
+            <!-- card-header le mathi ko bhag lai blue (bg-primary) banaucha -->
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">🔖 Save a Bookmark</h4>
+            </div>
+            
+            <div class="card-body p-4">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    {{ form.as_p }}
+                    
+                    <div class="mt-4">
+                        <!-- w-100 le button lai full width (lamo) banauncha -->
+                        <button type="submit" class="btn btn-success w-100 mb-2">Save Bookmark</button>
+                        <a href="{% url 'bookmark_list' %}" class="btn btn-outline-secondary w-100">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
