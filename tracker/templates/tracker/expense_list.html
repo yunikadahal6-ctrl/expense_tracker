@@ -92,12 +92,14 @@
     <!-- JAVASCRIPT FOR CHART.JS -->
     <script>
         const ctx = document.getElementById('expenseChart').getContext('2d');
+        const chartData = JSON.parse('{{ chart_data|default:"[0, 0, 0, 0]"|safe }}');
+
         const expenseChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ['Food', 'Transport', 'Bills', 'Other'],
                 datasets: [{
-                    data: {{ chart_data|safe }},
+                    data: chartData,
                     backgroundColor: [
                         '#ffc107', 
                         '#0dcaf0', 

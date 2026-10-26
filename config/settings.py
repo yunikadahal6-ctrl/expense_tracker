@@ -126,3 +126,5 @@ LOGIN_REDIRECT_URL = '/bookmark/'
 
 # Login navako user lai yo page ma pathaune
 LOGIN_URL = '/accounts/login/'
+
+ALLOWED_HOSTS = ['*']
