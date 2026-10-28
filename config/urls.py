@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 # 1. 'as' use garera dubai views lai aafno aafno naam dine
 from tracker import views as tracker_views
 from manager import views as manager_views
+from todo import views as todo_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,13 @@ urlpatterns = [
     path('bookmark/<int:pk>/delete/', manager_views.bookmark_delete, name='bookmark_delete'),
 
     path('accounts/signup/', manager_views.signup_view, name='signup'),
+
+    #todo app:
+    path('todo/',todo_views.task_list, name='task_list'),
+    path('todo/create/',todo_views.task_create, name = 'task_create'),
+    path('todo/<int:pk>/edit/',todo_views.task_update, name = 'task_update'),
+    path('todo/<int:pk>/toggle/',todo_views.toggle_task, name = 'toggle_task'),
+    path('todo/<int:pk>/delete/',todo_views.task_delete, name = 'task_delete'),
+
+
 ]

@@ -54,11 +54,11 @@ def expense_create(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid():
-            form.save(commit=False)
+            expense = form.save(commit=False)
         # Login vako user lai yo bookmark ko malik banaune
-            form.user = request.user
+            expense.user = request.user
             # Ani balla final save garne
-            form.save()
+            expense.save()
             return redirect('expense_list')
     else:
         form = ItemForm()
