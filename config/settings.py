@@ -123,7 +123,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Login vayepachi sidhai Bookmark list ma jane
-LOGIN_REDIRECT_URL = '/bookmark/' 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 # Login navako user lai yo page ma pathaune
 LOGIN_URL = '/accounts/login/'
